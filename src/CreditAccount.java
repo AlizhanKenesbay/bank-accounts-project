@@ -1,8 +1,10 @@
+import java.math.BigDecimal;
+
 public class CreditAccount extends Account {
     @Override
-    public void pay(int amount) {
-        if (balance <= 0) {
-            balance -= amount;
+    public void pay(BigDecimal amount) {
+        if (balance.compareTo(BigDecimal.ZERO) <= 0) { // if (balance <= 0)
+            balance = balance.subtract(amount);
             System.out.println("Оплата прошла успешно");
         } else {
             System.out.println("Ошибка, ваш счет имеет положительный баланс");
@@ -10,9 +12,9 @@ public class CreditAccount extends Account {
     }
 
     @Override
-    public void transfer(Account account, int amount) {
-        if (balance <= 0) {
-            balance -= amount;
+    public void transfer(Account account, BigDecimal amount) {
+        if (balance.compareTo(BigDecimal.ZERO) <= 0) { // if (balance <= 0)
+            balance = balance.subtract(amount);
             account.addMoney(amount);
             if (account instanceof SavingsAccount) {
                 System.out.println("Перевод на сберегательный счет в размере " + amount + " был выполнен");
@@ -27,11 +29,11 @@ public class CreditAccount extends Account {
     }
 
     @Override
-    public void addMoney(int amount) {
-        int potentialBalance = balance + amount;
+    public void addMoney(BigDecimal amount) {
+        BigDecimal potentialBalance = balance.add(amount);
 
-        if (potentialBalance >= 0) {
-            balance = 0;
+        if (potentialBalance.compareTo(BigDecimal.ZERO) >= 0) { // if (potentialBalance >= 0)
+            balance = BigDecimal.ZERO;
             System.out.println("Баланс кредитного счета пополнен на: " + amount);
         } else {
             System.out.println("Ошибка, введена отрицательная сумма");

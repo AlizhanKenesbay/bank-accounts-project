@@ -1,13 +1,16 @@
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 public abstract class Account {
-    public int balance;
+    BigDecimal balance = new BigDecimal(0);
 
-    public abstract void pay(int amount);
+    public abstract void pay(BigDecimal amount);
 
-    public abstract void transfer(Account account, int amount);
+    public abstract void transfer(Account account, BigDecimal amount);
 
-    public abstract void addMoney(int amount);
+    public abstract void addMoney(BigDecimal amount);
 
-    public int getBalance() {
-        return balance;
+    public BigDecimal getBalance() {
+        return balance.setScale(2, RoundingMode.CEILING);
     }
 }
